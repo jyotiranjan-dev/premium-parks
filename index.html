@@ -17,34 +17,34 @@
   --pink: #FF2060;
   --cyan: #00E5FF;
   --bw:   3px solid var(--wht);
-  --sh:   6px 6px 0 var(--wht);
   --sh-l: 6px 6px 0 var(--lime);
-  --sh-p: 6px 6px 0 var(--pink);
 }
 
+/* dot grid background */
 html,body{
-  min-height:100svh;
-  background:var(--blk);
+  min-height:100vh;
+  background-color:var(--blk);
+  background-image:radial-gradient(circle, rgba(212,255,0,.09) 1px, transparent 1px);
+  background-size:24px 24px;
   color:var(--wht);
   font-family:'Space Mono',monospace;
-  display:flex;align-items:center;justify-content:center;
-  padding:20px;
 }
 
-/* dot grid */
-body{
-  background-color:var(--blk);
-  background-image:
-    radial-gradient(circle, rgba(212,255,0,.09) 1px, transparent 1px);
-  background-size:24px 24px;
+/* noise overlay */
+.noise{
+  position:fixed;inset:0;pointer-events:none;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+  opacity:.55;
 }
 
 /* ───────────────────────────
-   WRAPPER
+   WRAPPER — full width/height
 ─────────────────────────── */
 .wrap{
-  width:100%;max-width:600px;
-  display:flex;flex-direction:column;gap:0;
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
 }
 
 /* ───────────────────────────
@@ -52,17 +52,18 @@ body{
 ─────────────────────────── */
 .topbar{
   background:var(--lime);
-  border:var(--bw);
-  border-bottom:none;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 18px;
+  border-bottom:var(--bw);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:11px 20px;
+  flex-shrink:0;
 }
-.topbar-left{
-  display:flex;align-items:center;gap:8px;
-}
+.topbar-left{display:flex;align-items:center;gap:8px;}
 .tb-dot{
   width:11px;height:11px;border-radius:50%;
   border:2px solid rgba(0,0,0,.25);
+  flex-shrink:0;
 }
 .tb-dot.r{background:#ff5f57;}
 .tb-dot.y{background:#febc2e;}
@@ -71,65 +72,34 @@ body{
   font-family:'Black Han Sans',sans-serif;
   font-size:12px;letter-spacing:.18em;
   color:var(--blk);text-transform:uppercase;
+  margin-left:6px;
 }
 .topbar-tag{
   font-size:9px;font-weight:700;letter-spacing:.14em;
   color:var(--blk);text-transform:uppercase;
   border:2px solid var(--blk);
   padding:3px 9px;
+  flex-shrink:0;
 }
 
 /* ───────────────────────────
-   MAIN CARD
+   MAIN CARD — fills remaining height
 ─────────────────────────── */
 .card{
   background:var(--blk);
-  border:var(--bw);
-  padding:44px 40px 40px;
+  flex:1;
+  padding:40px 32px 36px;
   position:relative;
-}
-
-/* ── MARQUEE STRIP ── */
-.marquee-strip{
-  position:absolute;
-  top:0;right:-1px;
-  writing-mode:vertical-rl;
-  background:var(--pink);
-  border-left:var(--bw);
-  height:100%;
-  width:38px;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-  user-select:none;
-}
-.marquee-inner{
-  display:flex;flex-direction:column;align-items:center;
-  gap:0;
-  animation:marquee-v 12s linear infinite;
-}
-@keyframes marquee-v{
-  from{transform:translateY(0);}
-  to{transform:translateY(-50%);}
-}
-.marquee-word{
-  font-family:'Black Han Sans',sans-serif;
-  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--blk);
-  white-space:nowrap;
-  padding:14px 0;
-  writing-mode:vertical-lr;
-  transform:rotate(180deg);
-}
-
-/* ── card content (leaves room for marquee) ── */
-.card-content{
-  padding-right:44px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 
 /* ── verified row ── */
 .verified-row{
   display:flex;align-items:center;gap:10px;
-  margin-bottom:32px;
+  margin-bottom:28px;
+  flex-wrap:wrap;
 }
 .v-chip{
   display:inline-flex;align-items:center;gap:6px;
@@ -137,18 +107,19 @@ body{
   font-size:9px;font-weight:700;letter-spacing:.16em;
   text-transform:uppercase;padding:5px 12px;
   border:2px solid var(--blk);
+  flex-shrink:0;
 }
 .v-chip svg{width:11px;height:11px;}
-.v-rule{flex:1;height:2px;background:rgba(255,255,255,.1);}
+.v-rule{flex:1;height:2px;background:rgba(255,255,255,.1);min-width:10px;}
 .v-handle{
   font-size:10px;color:rgba(242,242,236,.35);
-  letter-spacing:.06em;
+  letter-spacing:.06em;white-space:nowrap;
 }
 
 /* ── logo + name ── */
 .identity{
   display:flex;align-items:flex-start;gap:22px;
-  margin-bottom:32px;
+  margin-bottom:28px;
 }
 .logo-box{
   flex-shrink:0;
@@ -159,7 +130,6 @@ body{
   position:relative;
 }
 .logo-box img{width:100%;height:100%;object-fit:cover;display:block;}
-/* lime corner accent */
 .logo-box::after{
   content:'';
   position:absolute;bottom:0;right:0;
@@ -168,21 +138,17 @@ body{
   border-top:2px solid var(--blk);
   border-left:2px solid var(--blk);
 }
-
-.id-text{}
 .id-name{
   font-family:'Black Han Sans',sans-serif;
-  font-size:clamp(30px,7vw,44px);
-  line-height:.95;
+  font-size:clamp(32px,8vw,52px);
+  line-height:.92;
   letter-spacing:.02em;
   margin-bottom:12px;
 }
 .id-name .line1{display:block;color:var(--wht);}
 .id-name .line2{
-  display:block;
-  color:var(--lime);
+  display:block;color:var(--lime);
   -webkit-text-stroke:2px var(--lime);
-  /* outlined version overlaid */
   text-shadow:3px 3px 0 rgba(212,255,0,.18);
 }
 .id-sub{
@@ -198,7 +164,7 @@ body{
     90deg, var(--wht) 0px, var(--wht) 8px,
     transparent 8px, transparent 16px
   );
-  margin:28px 0;
+  margin:24px 0;
   opacity:.18;
 }
 
@@ -206,7 +172,7 @@ body{
 .statement{
   border:2px solid rgba(255,255,255,.14);
   padding:20px 22px;
-  margin-bottom:28px;
+  margin-bottom:24px;
   position:relative;
   background:rgba(212,255,0,.03);
 }
@@ -225,22 +191,20 @@ body{
 /* ── stats ── */
 .stats{
   display:grid;grid-template-columns:repeat(3,1fr);
-  gap:10px;margin-bottom:28px;
+  gap:10px;margin-bottom:24px;
 }
 .stat{
   border:2px solid rgba(255,255,255,.14);
   padding:16px 12px 14px;
   text-align:center;
-  position:relative;
-  overflow:hidden;
+  position:relative;overflow:hidden;
   cursor:default;
   transition:border-color .15s,transform .15s;
 }
 .stat::before{
   content:'';
   position:absolute;bottom:0;left:0;right:0;
-  height:3px;
-  background:var(--lime);
+  height:3px;background:var(--lime);
   transform:scaleX(0);transform-origin:left;
   transition:transform .25s cubic-bezier(.16,1,.3,1);
 }
@@ -248,9 +212,8 @@ body{
 .stat:hover::before{transform:scaleX(1);}
 .stat-n{
   font-family:'Black Han Sans',sans-serif;
-  font-size:clamp(22px,5vw,30px);
-  color:var(--lime);
-  line-height:1;margin-bottom:5px;
+  font-size:clamp(22px,5vw,32px);
+  color:var(--lime);line-height:1;margin-bottom:5px;
 }
 .stat-l{
   font-size:8px;font-weight:700;letter-spacing:.14em;
@@ -258,7 +221,7 @@ body{
 }
 
 /* ── CTA ── */
-.cta-wrap{display:flex;gap:10px;margin-bottom:0;}
+.cta-wrap{display:flex;gap:10px;}
 .btn-main{
   flex:1;
   display:flex;align-items:center;justify-content:center;gap:11px;
@@ -300,11 +263,11 @@ body{
 ─────────────────────────── */
 .bottombar{
   background:rgba(255,255,255,.04);
-  border:var(--bw);
-  border-top:2px solid rgba(255,255,255,.2);
+  border-top:var(--bw);
   padding:12px 20px;
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:10px;
+  flex-shrink:0;
 }
 .bb-copy{
   font-size:9px;color:rgba(242,242,236,.25);
@@ -313,33 +276,51 @@ body{
 .bb-links{display:flex;gap:16px;}
 .bb-links a{
   font-size:9px;color:rgba(242,242,236,.25);
-  text-decoration:none;letter-spacing:.08em;
-  text-transform:uppercase;
+  text-decoration:none;letter-spacing:.08em;text-transform:uppercase;
   transition:color .15s;
 }
 .bb-links a:hover{color:var(--lime);}
 
 /* ───────────────────────────
-   NOISE
+   DESKTOP — center a max-width card
 ─────────────────────────── */
-.noise{
-  position:fixed;inset:0;pointer-events:none;z-index:999;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
-  opacity:.55;
+@media(min-width:700px){
+  html,body{
+    display:flex;align-items:center;justify-content:center;
+    padding:32px 20px;
+  }
+  .wrap{
+    max-width:620px;
+    min-height:unset;
+    border:var(--bw);
+    box-shadow:8px 8px 0 rgba(212,255,0,.15);
+  }
+  .card{
+    flex:unset;
+    justify-content:flex-start;
+  }
 }
 
 /* ───────────────────────────
-   RESPONSIVE
+   MOBILE adjustments
 ─────────────────────────── */
-@media(max-width:480px){
-  .card{padding:32px 20px 32px;}
-  .card-content{padding-right:44px;}
-  .identity{gap:16px;}
-  .logo-box{width:64px;height:64px;}
+@media(max-width:699px){
+  .card{padding:28px 18px 28px;}
+  .topbar{padding:10px 16px;}
+  .topbar-title{font-size:10px;}
+  .identity{gap:14px;}
+  .logo-box{width:66px;height:66px;}
+  .logo-box::after{width:12px;height:12px;}
   .cta-wrap{flex-direction:column;}
-  .marquee-strip{width:32px;}
-  .btn-owner{padding:14px 18px;}
+  .btn-main{font-size:15px;padding:15px 16px;}
+  .btn-owner{padding:14px 16px;}
+  .verified-row{gap:8px;}
+  .v-handle{font-size:9px;}
+  .stmt-text{font-size:12px;}
+  .statement{padding:16px 16px;}
+  .divider{margin:18px 0;}
 }
+
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;}
 }
@@ -350,7 +331,7 @@ body{
 
 <div class="wrap" role="main">
 
-  <!-- TOP BAR (fake window chrome) -->
+  <!-- TOP BAR -->
   <div class="topbar">
     <div class="topbar-left">
       <div class="tb-dot r"></div>
@@ -364,100 +345,82 @@ body{
   <!-- MAIN CARD -->
   <div class="card">
 
-    <!-- vertical marquee sidebar -->
-    <div class="marquee-strip" aria-hidden="true">
-      <div class="marquee-inner">
-        <!-- doubled for seamless loop -->
-        <span class="marquee-word">PREMIUM PERKS</span>
-        <span class="marquee-word">OFFICIAL SITE</span>
-        <span class="marquee-word">TELEGRAM</span>
-        <span class="marquee-word">VERIFIED</span>
-        <span class="marquee-word">PREMIUM PERKS</span>
-        <span class="marquee-word">OFFICIAL SITE</span>
-        <span class="marquee-word">TELEGRAM</span>
-        <span class="marquee-word">VERIFIED</span>
+    <!-- verified row -->
+    <div class="verified-row">
+      <div class="v-chip">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z" fill="currentColor"/>
+          <path d="m9 12 2 2 4-4" stroke="#FF2060" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        VERIFIED OWNERSHIP
+      </div>
+      <div class="v-rule" aria-hidden="true"></div>
+      <span class="v-handle">t.me/PREMIUMPERKS01</span>
+    </div>
+
+    <!-- identity -->
+    <div class="identity">
+      <div class="logo-box">
+        <img src="https://i.ibb.co/Z6Bcwdqz/IMG-20260702-191222-421.jpg" alt="Premium Perks Logo"/>
+      </div>
+      <div class="id-text">
+        <h1 class="id-name">
+          <span class="line1">PREMIUM</span>
+          <span class="line2">PERKS</span>
+        </h1>
+        <p class="id-sub">Public Telegram Channel &nbsp;·&nbsp; <span>@PREMIUMPERKS01</span></p>
       </div>
     </div>
 
-    <div class="card-content">
+    <!-- dashed divider -->
+    <div class="divider" aria-hidden="true"></div>
 
-      <!-- verified row -->
-      <div class="verified-row">
-        <div class="v-chip">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z" fill="currentColor"/>
-            <path d="m9 12 2 2 4-4" stroke="#FF2060" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          VERIFIED OWNERSHIP
-        </div>
-        <div class="v-rule" aria-hidden="true"></div>
-        <span class="v-handle">t.me/PREMIUMPERKS01</span>
+    <!-- ownership statement -->
+    <div class="statement" role="region" aria-label="Ownership statement">
+      <span class="stmt-label" aria-hidden="true">// OWNERSHIP</span>
+      <p class="stmt-text">
+        This is the <strong>one official website</strong> for the
+        <strong>Premium Perks</strong> Telegram channel.
+        Owned by <strong>@clyxr</strong>, co-managed by <strong>SIRBMGO</strong>.
+        No other site represents this channel.
+      </p>
+    </div>
+
+    <!-- stats -->
+    <div class="stats" role="list" aria-label="Community stats">
+      <div class="stat" role="listitem">
+        <div class="stat-n">1.1K</div>
+        <div class="stat-l">Members</div>
       </div>
-
-      <!-- identity -->
-      <div class="identity">
-        <div class="logo-box">
-          <img src="https://i.ibb.co/rGh7QGtZ/IMG-20260702-191222-421.jpg" alt="Premium Perks Logo"/>
-        </div>
-        <div class="id-text">
-          <h1 class="id-name">
-            <span class="line1">PREMIUM</span>
-            <span class="line2">PERKS</span>
-          </h1>
-          <p class="id-sub">Public Telegram Channel &nbsp;·&nbsp; <span>@PREMIUMPERKS01</span></p>
-        </div>
+      <div class="stat" role="listitem">
+        <div class="stat-n">11</div>
+        <div class="stat-l">Admins</div>
       </div>
-
-      <!-- dashed divider -->
-      <div class="divider" aria-hidden="true"></div>
-
-      <!-- ownership statement -->
-      <div class="statement" role="region" aria-label="Ownership statement">
-        <span class="stmt-label" aria-hidden="true">// OWNERSHIP</span>
-        <p class="stmt-text">
-          This is the <strong>one official website</strong> for the
-          <strong>Premium Perks</strong> Telegram channel.
-          Owned by <strong>@clyxr</strong>, co-managed by <strong>SIRBMGO</strong>.
-          No other site represents this channel.
-        </p>
+      <div class="stat" role="listitem">
+        <div class="stat-n">FREE</div>
+        <div class="stat-l">To Join</div>
       </div>
+    </div>
 
-      <!-- stats -->
-      <div class="stats" role="list" aria-label="Community stats">
-        <div class="stat" role="listitem">
-          <div class="stat-n">1.1K</div>
-          <div class="stat-l">Members</div>
-        </div>
-        <div class="stat" role="listitem">
-          <div class="stat-n">11</div>
-          <div class="stat-l">Admins</div>
-        </div>
-        <div class="stat" role="listitem">
-          <div class="stat-n">FREE</div>
-          <div class="stat-l">To Join</div>
-        </div>
-      </div>
+    <!-- CTA buttons -->
+    <div class="cta-wrap">
+      <a href="https://t.me/PREMIUMPERKS01"
+         target="_blank" rel="noopener noreferrer"
+         class="btn-main"
+         aria-label="Join Premium Perks on Telegram">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M21.944 2.622a1.5 1.5 0 0 0-1.526-.235L2.312 9.51a1.5 1.5 0 0 0 .114 2.83l4.199 1.297 1.974 6.112a1 1 0 0 0 1.727.332l2.836-3.12 4.765 3.504a1.5 1.5 0 0 0 2.34-1.01L22.49 4.044a1.5 1.5 0 0 0-.546-1.422zM9.61 15.063l-.82-2.876 7.688-5.448L9.61 15.063z" fill="currentColor"/>
+        </svg>
+        Join Channel
+      </a>
+      <a href="https://t.me/clyxr"
+         target="_blank" rel="noopener noreferrer"
+         class="btn-owner"
+         aria-label="Contact channel owner @clyxr on Telegram">
+        @clyxr
+      </a>
+    </div>
 
-      <!-- CTA buttons -->
-      <div class="cta-wrap">
-        <a href="https://t.me/PREMIUMPERKS01"
-           target="_blank" rel="noopener noreferrer"
-           class="btn-main"
-           aria-label="Join Premium Perks on Telegram">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M21.944 2.622a1.5 1.5 0 0 0-1.526-.235L2.312 9.51a1.5 1.5 0 0 0 .114 2.83l4.199 1.297 1.974 6.112a1 1 0 0 0 1.727.332l2.836-3.12 4.765 3.504a1.5 1.5 0 0 0 2.34-1.01L22.49 4.044a1.5 1.5 0 0 0-.546-1.422zM9.61 15.063l-.82-2.876 7.688-5.448L9.61 15.063z" fill="currentColor"/>
-          </svg>
-          Join Channel
-        </a>
-        <a href="https://t.me/clyxr"
-           target="_blank" rel="noopener noreferrer"
-           class="btn-owner"
-           aria-label="Contact channel owner @clyxr on Telegram">
-          @clyxr
-        </a>
-      </div>
-
-    </div><!-- /card-content -->
   </div><!-- /card -->
 
   <!-- BOTTOM BAR -->
