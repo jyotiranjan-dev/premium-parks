@@ -27,17 +27,15 @@ html,body{
   background:var(--blk);
   color:var(--wht);
   font-family:'Space Mono',monospace;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  /* Mobile: no padding so card goes edge-to-edge */
-  padding:0;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
 }
 
 /* dot grid */
 body{
   background-color:var(--blk);
-  background-image:radial-gradient(circle, rgba(212,255,0,.09) 1px, transparent 1px);
+  background-image:
+    radial-gradient(circle, rgba(212,255,0,.09) 1px, transparent 1px);
   background-size:24px 24px;
 }
 
@@ -45,12 +43,8 @@ body{
    WRAPPER
 ─────────────────────────── */
 .wrap{
-  width:100%;
-  /* No max-width on mobile — fills screen. Capped on desktop. */
-  max-width:100%;
-  display:flex;
-  flex-direction:column;
-  gap:0;
+  width:100%;max-width:600px;
+  display:flex;flex-direction:column;gap:0;
 }
 
 /* ───────────────────────────
@@ -60,9 +54,7 @@ body{
   background:var(--lime);
   border:var(--bw);
   border-bottom:none;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  display:flex;align-items:center;justify-content:space-between;
   padding:10px 18px;
 }
 .topbar-left{
@@ -145,14 +137,12 @@ body{
   font-size:9px;font-weight:700;letter-spacing:.16em;
   text-transform:uppercase;padding:5px 12px;
   border:2px solid var(--blk);
-  flex-shrink:0;
 }
 .v-chip svg{width:11px;height:11px;}
 .v-rule{flex:1;height:2px;background:rgba(255,255,255,.1);}
 .v-handle{
   font-size:10px;color:rgba(242,242,236,.35);
   letter-spacing:.06em;
-  white-space:nowrap;
 }
 
 /* ── logo + name ── */
@@ -169,6 +159,7 @@ body{
   position:relative;
 }
 .logo-box img{width:100%;height:100%;object-fit:cover;display:block;}
+/* lime corner accent */
 .logo-box::after{
   content:'';
   position:absolute;bottom:0;right:0;
@@ -191,6 +182,7 @@ body{
   display:block;
   color:var(--lime);
   -webkit-text-stroke:2px var(--lime);
+  /* outlined version overlaid */
   text-shadow:3px 3px 0 rgba(212,255,0,.18);
 }
 .id-sub{
@@ -337,47 +329,17 @@ body{
 }
 
 /* ───────────────────────────
-   RESPONSIVE — MOBILE FIRST
+   RESPONSIVE
 ─────────────────────────── */
-
-/* Small phones: tighten inner padding, stack CTAs */
 @media(max-width:480px){
-  .card{padding:28px 18px 28px 18px;}
-  .card-content{padding-right:40px;}
-  .identity{gap:14px;}
+  .card{padding:32px 20px 32px;}
+  .card-content{padding-right:44px;}
+  .identity{gap:16px;}
   .logo-box{width:64px;height:64px;}
-  .logo-box::after{width:12px;height:12px;}
-  .verified-row{gap:8px;}
-  .v-handle{font-size:9px;}
   .cta-wrap{flex-direction:column;}
-  .btn-main{font-size:15px;padding:15px 16px;}
-  .btn-owner{padding:14px 16px;font-size:10px;}
   .marquee-strip{width:32px;}
-  .marquee-word{font-size:8px;padding:10px 0;}
-  .stats{gap:8px;}
-  .stat{padding:12px 8px 10px;}
-  .stmt-text{font-size:12px;}
-  .divider{margin:20px 0;}
-  .statement{padding:16px 16px;margin-bottom:20px;}
-  .verified-row{margin-bottom:22px;}
-  .identity{margin-bottom:22px;}
-  .stats{margin-bottom:20px;}
+  .btn-owner{padding:14px 18px;}
 }
-
-/* Landscape phones / small tablets: give it a max-width and some breathing room */
-@media(min-width:481px){
-  html,body{padding:20px;}
-  .wrap{max-width:600px;}
-}
-
-/* Tablets and up: standard desktop view */
-@media(min-width:768px){
-  html,body{padding:28px;}
-  .wrap{max-width:600px;}
-  .card{padding:44px 40px 40px;}
-  .card-content{padding-right:48px;}
-}
-
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;}
 }
@@ -405,6 +367,7 @@ body{
     <!-- vertical marquee sidebar -->
     <div class="marquee-strip" aria-hidden="true">
       <div class="marquee-inner">
+        <!-- doubled for seamless loop -->
         <span class="marquee-word">PREMIUM PERKS</span>
         <span class="marquee-word">OFFICIAL SITE</span>
         <span class="marquee-word">TELEGRAM</span>
@@ -434,7 +397,7 @@ body{
       <!-- identity -->
       <div class="identity">
         <div class="logo-box">
-          <img src="https://i.ibb.co/Z6Bcwdqz/IMG-20260702-191222-421.jpg" alt="Premium Perks Logo"/>
+          <img src="https://i.ibb.co/rGh7QGtZ/IMG-20260702-191222-421.jpg" alt="Premium Perks Logo"/>
         </div>
         <div class="id-text">
           <h1 class="id-name">
